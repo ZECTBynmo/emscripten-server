@@ -12,8 +12,5 @@ console.log( sourceCode );
 
 needle.post( url, sourceCode, function(err, res, body) {
 
-	for( var iItem in body ) {
-		console.log( iItem );
-		console.log( body[iItem].toString() );
-	}
+	require("fs").writeFileSync( __dirname + "/test.js", body.js );
 });
