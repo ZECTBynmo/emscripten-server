@@ -7,6 +7,7 @@ var port = 3000;
 
 app.post('/compile', function(req, res) {
 	console.log( req.body );
+	console.log( req.params );
 
     var guid = uuid.v1(),
 		filePath = __dirname + "/tmp/" + guid + ".cpp",
@@ -31,6 +32,8 @@ app.post('/compile', function(req, res) {
 				});
 			}
 		});
+	} else {
+		res.json( 500, {"error": "Request contains no source file: " + error} );
 	}
 	
 });
