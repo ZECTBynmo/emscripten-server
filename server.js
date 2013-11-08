@@ -33,7 +33,7 @@ app.post('/compile', function(req, res) {
 			}
 		});
 	} else {
-		res.json( 500, {"error": "Request contains no source file: " + error} );
+		res.json( 500, {"error": "Request contains no source file: "} );
 	}
 	
 });
