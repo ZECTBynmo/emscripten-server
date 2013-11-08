@@ -5,6 +5,13 @@ var app = require('express')(),
 
 var port = 3000;
 
+app.configure(function(){
+  	app.use(express.bodyParser());
+  	app.use(app.router);
+});
+
+app.listen( port );
+
 app.post('/compile', function(req, res) {
 	console.log( req.body );
 	console.log( req.params );
@@ -39,5 +46,4 @@ app.post('/compile', function(req, res) {
 });
 
 
-app.listen( port );
 console.log( "Listening on port " + port );
