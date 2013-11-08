@@ -14,15 +14,12 @@ app.configure(function(){
 app.listen( port );
 
 app.post('/compile', function(req, res) {
-	console.log( req.body );
-	console.log( req.params );
 
     var guid = uuid.v1(),
 		filePath = __dirname + "/tmp/" + guid + ".cpp",
 		emscrPath = __dirname + "/../emscripten/emcc";
 
 	if( req.body != undefined ) {
-		console.log( "Converting ")
 		fs.writeFile( filePath, req.body.c, function(err) {
 			if( err ) {
 				res.json( 500, {"error": "Failed to write out cpp file: " + err} );
@@ -35,7 +32,6 @@ app.post('/compile', function(req, res) {
 						if( error ) {
 							res.json( 500, {"error": "Failed to compile source file: " + error} );
 						} else {
-							console.log( data.toString() );
 							res.json( 200, {"js": data.toString()} );
 						}
 					});
