@@ -35,6 +35,7 @@ app.post('/compile', function(req, res) {
 						if( error ) {
 							res.json( 500, {"error": "Failed to compile source file: " + error} );
 						} else {
+							console.log( data.toString() );
 							res.json( 200, {"js": data.toString()} );
 						}
 					});
