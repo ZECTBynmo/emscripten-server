@@ -18,15 +18,16 @@ app.post('/compile', function(req, res) {
 	console.log( req.params );
 
     var guid = uuid.v1(),
-		filePath = __dirname + "/tmp/" + guid + ".cpp",
-		emscrPath = __dirname + "/../emscripten/emcc";
+		filePath = "./tmp/" + guid + ".cpp",
+		emscrPath = "../emscripten/emcc";
 
 	if( req.body != undefined ) {
+		console.log( "Converting ")
 		fs.writeFile( filePath, req.body.c, function(err) {
 			if( err ) {
 				res.json( 500, {"error": "Failed to write out cpp file: " + err} );
 			} else {
-				var outputPath = __dirname + "/tmp/" + guid + ".js",
+				var outputPath = "./tmp/" + guid + ".js",
 					command = emscrPath + " " + filePath + " -o " + outputPath;
 
 				ares( command, true, function() {
