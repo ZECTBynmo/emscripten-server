@@ -12,24 +12,27 @@ app.post('/compile', function(req, res) {
 		filePath = __dirname + "/tmp/" + guid + ".cpp",
 		emscrPath = __dirname + "/../emscripten/emcc";
 
-	fs.writeFile( filePath, req.body.c, function(err) {
-		if( err ) {
-			res.json( 500, {"error": "Failed to write out cpp file: " + err} );
-		} else {
-			var outputPath = __dirname + "/tmp/" + guid + ".js",
-				command = emscrPath + " " + filePath + " -o " + outputPath;
+	if( req.body != undefined ) {
+		fs.writeFile( filePath, req.body.c, function(err) {
+			if( err ) {
+				res.json( 500, {"error": "Failed to write out cpp file: " + err} );
+			} else {
+				var outputPath = __dirname + "/tmp/" + guid + ".js",
+					command = emscrPath + " " + filePath + " -o " + outputPath;
 
-			ares( command, true, function() {
-				fs.readFile( outputPath, function(error, data) {
-					if( error ) {
-						res.json( 500, {"error": "Failed to compile source file: " + error} );
-					} else {
-						res.json( 200, {"js": data} );
-					}
+				ares( command, true, function() {
+					fs.readFile( outputPath, function(error, data) {
+						if( error ) {
+							res.json( 500, {"error": "Failed to compile source file: " + error} );
+						} else {
+							res.json( 200, {"js": data} );
+						}
+					});
 				});
-			});
-		}
-	});
+			}
+		});
+	}
+	
 });
 
 

@@ -1,7 +1,9 @@
 var app = require("express")(),
 	needle = require('needle');
 
-var sourceCode = {"c":"class Tester { public: Tester(){} }"};
+var sourceCode = {
+	c: "class Tester { public: Tester(){} }"
+};
 
 var url = "http://50.17.82.56:3000/compile";
 

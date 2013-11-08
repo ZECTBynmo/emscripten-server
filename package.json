@@ -11,6 +11,7 @@
   "license": "BSD",
   "dependencies": {
     "ares": "0.0.12",
-    "node-uuid": "~1.4.1"
+    "node-uuid": "~1.4.1",
+    "express": "~3.4.4"
   }
 }
