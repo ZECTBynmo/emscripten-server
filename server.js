@@ -27,7 +27,10 @@ app.post('/compile', function(req, res) {
 				var outputPath = __dirname + "/tmp/" + guid + ".js",
 					command = emscrPath + " " + filePath + " -o " + outputPath;
 
-				ares( command, true, function() {
+				ares( command, true, function(error, stdout, stderr) {
+					console.log( stdout );
+					console.log( stderr );
+
 					fs.readFile( outputPath, function(error, data) {
 						if( error ) {
 							res.json( 500, {"error": "Failed to compile source file: " + error} );
