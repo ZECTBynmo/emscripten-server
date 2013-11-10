@@ -68,52 +68,39 @@ app.post('/compile', function(req, res) {
 					if (error) {
 						console.log("Error!");
 						console.log(error.stack);
-						console.log('Error code: '+error.code);
-						console.log('Signal received: '+error.signal);
+						res.json( 500, {"error": "Failed to compile source file: " + error} );
 					}
 
-					if( stdout != undefined && stdout != null && stdout != "" )
-						console.log('Child Process STDOUT: ' + stdout);
+					fs.readFile( outputPath, function(error, data) {
+						if( error ) {
+							res.json( 500, {"error": "Failed to compile source file: " + error} );
+						} else {
+							var responseData = {
+								"js": data.toString(),
+								"stdout": stdout,
+								"stderr": stderr,
+							};
 
-					if( stderr != undefined && stderr != null && stderr != "" )
-						console.log('Child Process STDERR: ' + stderr);
+							if( stdout ) {
+								console.log( "stdout" );
+								console.log( stdout );
+							}
+
+							if( stderr ) {
+								console.log( "stderr" );
+								console.log( stderr );
+							}
+
+							res.json( 200, responseData );
+						}
+					});
+
 				});
 
-				command.on('data', function(data) {
-					console.log( "DATA!!" );
-					console.log( data );
-				});
 
 				command.on('exit', function (code) {
 					console.log('Child process exited with exit code '+code);
 				});
-
-//				ares( command, true, function(error, stdout, stderr) {
-//
-//					fs.readFile( outputPath, function(error, data) {
-//						if( error ) {
-//							res.json( 500, {"error": "Failed to compile source file: " + error} );
-//						} else {
-//							var responseData = {
-//								"js": data.toString(),
-//								"stdout": stdout,
-//								"stderr": stderr,
-//							};
-//
-//							if( stdout ) {
-//								console.log( "stdout" );
-//								console.log( stdout );
-//							}
-//
-//							if( stderr ) {
-//								console.log( "stderr" );
-//								console.log( stderr );
-//							}
-//
-//							res.json( 200, responseData );
-//						}
-//					});
-//				});
 			}
 		});
 	} else {
