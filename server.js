@@ -59,7 +59,7 @@ app.post('/compile', function(req, res) {
 				res.json( 500, {"error": "Failed to write out cpp file: " + err} );
 			} else {
 
-				ares( command, false, function(error, stdout, stderr) {
+				ares( command, true, function(error, stdout, stderr) {
 
 					fs.readFile( outputPath, function(error, data) {
 						if( error ) {
