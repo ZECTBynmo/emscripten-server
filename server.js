@@ -16,6 +16,10 @@ app.listen( port );
 app.post('/compile', function(req, res) {
 	var options = req.body;
 
+	console.log( options );
+	console.log( options );
+	console.log( options );
+
     var guid = options.guid || uuid.v1(),
 		filePath = __dirname + "/tmp/" + guid + ".cpp",
 		emscrPath = __dirname + "/../emscripten/emcc",
