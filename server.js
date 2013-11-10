@@ -68,7 +68,7 @@ app.post('/compile', function(req, res) {
 					if (error) {
 						console.log("Error!");
 						console.log(error.stack);
-						res.json( 500, {"error": "Failed to compile source file: " + error} );
+						res.json( 200, {"error": "Failed to compile source file: " + error} );
 					}
 
 					fs.readFile( outputPath, function(error, data) {
