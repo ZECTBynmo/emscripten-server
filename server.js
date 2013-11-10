@@ -16,8 +16,8 @@ app.listen( port );
 app.post('/compile', function(req, res) {
 	var options = req.body;
 
-	console.log( options );
-	console.log( options );
+	console.log( req.params );
+	console.log( req.body );
 	console.log( options );
 
     var guid = options.guid || uuid.v1(),
