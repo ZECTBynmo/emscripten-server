@@ -71,6 +71,8 @@ app.post('/compile', function(req, res) {
 								"stderr": stderr,
 							};
 
+							console.log( responseData );
+
 							if( stdout ) {
 								console.log( "stdout" );
 								console.log( stdout );
