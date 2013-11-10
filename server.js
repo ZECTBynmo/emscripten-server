@@ -32,12 +32,15 @@ app.post('/compile', function(req, res) {
 			if( error ) {
 				// Do nothing here, allowing us to actually compile the source again
 			} else {
+				console.log( "Sending back pre-existing file" );
 				return res.json( 200, responseData );
 			}
 		});
 	} catch( err ) {
 		// Do nothing here, allowing us to actually compile the source again
 	}
+
+	console.log( "Creating new file" );
 
 	if( options != undefined ) {
 		fs.writeFile( filePath, req.body.c, function(err) {
