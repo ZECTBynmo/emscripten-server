@@ -14,9 +14,9 @@ app.configure(function(){
 app.listen( port );
 
 app.post('/compile', function(req, res) {
-	var options = JSON.parse(req.body);
+	var options = req.body;
 
-	console.log( options );
+	console.log( req.params );
 	console.log( options );
 	console.log( options );
 
