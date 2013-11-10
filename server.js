@@ -37,6 +37,7 @@ app.post('/compile', function(req, res) {
 			}
 		});
 	} catch( err ) {
+		console.log( err );
 		// Do nothing here, allowing us to actually compile the source again
 	}
 
