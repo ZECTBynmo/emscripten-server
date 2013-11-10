@@ -25,7 +25,9 @@ app.post('/compile', function(req, res) {
 
 	// Check whether we've already generated this file before. If we did, just 
 	// respond with the pre-generated file. This should speed things up a lot.
-	if( fs.statSync(outputPath).isFile() ) {
+	try {
+		fs.statSync(outputPath).isFile();
+
 		fs.readFile( outputPath, function(error, data) {
 			if( error ) {
 				// Do nothing here, allowing us to actually compile the source again
@@ -33,6 +35,8 @@ app.post('/compile', function(req, res) {
 				return res.json( 200, responseData );
 			}
 		});
+	} catch( err ) {
+		// Do nothing here, allowing us to actually compile the source again
 	}
 
 	if( options != undefined ) {
