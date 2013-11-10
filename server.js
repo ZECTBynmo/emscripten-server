@@ -48,7 +48,7 @@ app.post('/compile', function(req, res) {
 	console.log( "Creating new file" );
 
 	if( options != undefined ) {
-		fs.writeFile( filePath, req.body.c, function(err) {
+		fs.writeFile( filePath, options.c, function(err) {
 			if( err ) {
 				res.json( 500, {"error": "Failed to write out cpp file: " + err} );
 			} else {
