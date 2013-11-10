@@ -19,7 +19,7 @@ app.post('/compile', function(req, res) {
     var guid = options.guid || uuid.v1(),
 		filePath = __dirname + "/tmp/" + guid + ".cpp",
 		emscrPath = __dirname + "/../emscripten/emcc",
-		outputExtension = options.outputHTML ? ".html" : ".js",
+		outputExtension = options.extension || ".js",
 		outputPath = __dirname + "/tmp/" + guid + outputExtension,
 		command = emscrPath + " " + filePath + " -o " + outputPath;
 
