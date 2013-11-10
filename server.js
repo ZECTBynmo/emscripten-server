@@ -65,6 +65,16 @@ app.post('/compile', function(req, res) {
 								"stderr": stderr,
 							};
 
+							if( stdout ) {
+								console.log( "stdout" );
+								console.log( stdout );
+							}
+
+							if( stderr ) {
+								console.log( "stderr" );
+								console.log( stderr );
+							}
+
 							res.json( 200, responseData );
 						}
 					});
