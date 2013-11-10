@@ -14,6 +14,10 @@ app.configure(function(){
 app.listen( port );
 
 app.post('/compile', function(req, res) {
+
+	// We don't want the browser to cache the results 
+    res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+
 	var options = req.body;
 
 	console.log( req.params );
