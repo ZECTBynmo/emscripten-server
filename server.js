@@ -36,6 +36,12 @@ app.post('/compile', function(req, res) {
 			if( error ) {
 				// Do nothing here, allowing us to actually compile the source again
 			} else {
+				var responseData = {
+					"js": data.toString(),
+					"stdout": undefined,
+					"stderr": undefined,
+				};
+
 				console.log( "Sending back pre-existing file" );
 				return res.json( 200, responseData );
 			}
