@@ -80,6 +80,7 @@ app.post('/compile', function(req, res) {
 				});
 
 				command.on('data', function(data) {
+					console.log( "DATA!!" );
 					console.log( data );
 				});
 
