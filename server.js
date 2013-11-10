@@ -25,7 +25,7 @@ app.post('/compile', function(req, res) {
 		emscrPath = __dirname + "/../emscripten/emcc",
 		outputExtension = options.extension || ".js",
 		outputPath = __dirname + "/tmp/" + guid + outputExtension,
-		command = emscrPath + " " + filePath + " -o " + outputPath;
+		strCommand = emscrPath + " " + filePath + " -o " + outputPath;
 
 	// Check whether we've already generated this file before. If we did, just 
 	// respond with the pre-generated file. This should speed things up a lot.
@@ -59,34 +59,58 @@ app.post('/compile', function(req, res) {
 				res.json( 500, {"error": "Failed to write out cpp file: " + err} );
 			} else {
 
-				ares( command, true, function(error, stdout, stderr) {
 
-					fs.readFile( outputPath, function(error, data) {
-						if( error ) {
-							res.json( 500, {"error": "Failed to compile source file: " + error} );
-						} else {
-							var responseData = {
-								"js": data.toString(),
-								"stdout": stdout,
-								"stderr": stderr,
-							};
+				var childProcess = require('child_process'),
+					command;
 
-							console.log( responseData );
+				command = childProcess.exec(strCommand, function (error, stdout, stderr) {
+					if (error) {
+						console.log(error.stack);
+						console.log('Error code: '+error.code);
+						console.log('Signal received: '+error.signal);
+					}
 
-							if( stdout ) {
-								console.log( "stdout" );
-								console.log( stdout );
-							}
+					if( stdout != undefined && stdout != null && stdout != "" )
+						console.log('Child Process STDOUT: ' + stdout);
 
-							if( stderr ) {
-								console.log( "stderr" );
-								console.log( stderr );
-							}
-
-							res.json( 200, responseData );
-						}
-					});
+					if( stderr != undefined && stderr != null && stderr != "" )
+						console.log('Child Process STDERR: ' + stderr);
 				});
+
+				command.on('data', function(data) {
+					console.log( data );
+				});
+
+				command.on('exit', function (code) {
+					console.log('Child process exited with exit code '+code);
+				});
+
+//				ares( command, true, function(error, stdout, stderr) {
+//
+//					fs.readFile( outputPath, function(error, data) {
+//						if( error ) {
+//							res.json( 500, {"error": "Failed to compile source file: " + error} );
+//						} else {
+//							var responseData = {
+//								"js": data.toString(),
+//								"stdout": stdout,
+//								"stderr": stderr,
+//							};
+//
+//							if( stdout ) {
+//								console.log( "stdout" );
+//								console.log( stdout );
+//							}
+//
+//							if( stderr ) {
+//								console.log( "stderr" );
+//								console.log( stderr );
+//							}
+//
+//							res.json( 200, responseData );
+//						}
+//					});
+//				});
 			}
 		});
 	} else {
