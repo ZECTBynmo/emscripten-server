@@ -64,6 +64,8 @@ app.post('/compile', function(req, res) {
 					command;
 
 				command = childProcess.exec(strCommand, function (error, stdout, stderr) {
+					console.log("Finished");
+
 					if (error) {
 						console.log(error.stack);
 						console.log('Error code: '+error.code);
